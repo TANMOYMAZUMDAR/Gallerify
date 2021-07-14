@@ -16,4 +16,13 @@ interface FlckrApi {
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
     ): FlckrPhotos
+
+  @GET( "?method=flickr.photos.search&api_key=6f102c62f41998d151e5a1b48713cf13&format=json&nojsoncallback=1&extras=url_s&text=cat")
+
+  suspend fun getSearchImages(
+      @Query("text") text : String?,
+      @Query("page") page: Int,
+      @Query("per_page") perPage: Int
+      ):FlckrPhotos
+
 }

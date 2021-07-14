@@ -20,5 +20,15 @@ class FlckrRepository @Inject constructor(private val flkcrApi: FlckrApi) {
             pagingSourceFactory = { UnsplashPagingSource(flkcrApi) }
         ).liveData
 
+    fun getSearchImagesResults(query:String) =
+        Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                maxSize = 100,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { FlckrSearchPagingSource(flkcrApi,query) }
+        ).liveData
+
 
 }

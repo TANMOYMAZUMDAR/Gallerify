@@ -16,6 +16,19 @@ class GalleryViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
            val _images=repository.getSearchResults().cachedIn(viewModelScope)
+    private val currentQuery = state.getLiveData(CURRENT_QUERY, DEFAULT_QUERY)
 
+    val _searchimages = currentQuery.switchMap { queryString ->
+        repository.getSearchImagesResults(queryString).cachedIn(viewModelScope)
+    }
+
+    fun searchPhotos(query: String) {
+        currentQuery.value = query
+    }
+
+    companion object {
+        private const val CURRENT_QUERY = "current_query"
+        private const val DEFAULT_QUERY = "cats"
+    }
    }
 
